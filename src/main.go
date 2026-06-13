@@ -81,14 +81,19 @@ func run() int {
 	}
 	exeDir := filepath.Dir(exePath)
 	configPath := strings.TrimSpace(*configFlag)
-	if configPath == "" {
-		configPath = filepath.Join(exeDir, "ini", "scum_rcon.ini")
+	cfg := iniConfig{
+		Language: "en",
 	}
+	if !hasServerFlags(*hostFlag, *portFlag, *passwordFlag) {
+		if configPath == "" {
+			configPath = filepath.Join(exeDir, "ini", "scum_rcon.ini")
+		}
 
-	cfg, err := loadOrCreateConfig(configPath)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "ERROR|config|"+err.Error())
-		return 2
+		cfg, err = loadOrCreateConfig(configPath)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "ERROR|config|"+err.Error())
+			return 2
+		}
 	}
 
 	if strings.TrimSpace(*hostFlag) != "" {
@@ -139,6 +144,10 @@ func run() int {
 	}
 
 	return 0
+}
+
+func hasServerFlags(host string, port int, password string) bool {
+	return strings.TrimSpace(host) != "" && port > 0 && strings.TrimSpace(password) != ""
 }
 
 func interactiveSession(cfg iniConfig, timeout, tailTimeout time.Duration) int {
