@@ -27,7 +27,7 @@ password = YOUR_RCON_PASSWORD
 ```powershell
 .\rcon.exe -commands "ListSpawnedVehicles"
 .\rcon.exe -commands "SpawnItem Weapon_M82A1 1 Location <steam64>"
-.\rcon.exe "ListPlayers;ListSpawnedVehicles;CheckServerTime;SpawnItem Weapon_M82A1 1 Location <steam64>"
+.\rcon.exe -commands "ListPlayers;ListSpawnedVehicles;CheckServerTime;SpawnItem Weapon_M82A1 1 Location <steam64>"
 .\rcon.exe -host "127.0.0.1" -port 9010 -password "passwd" -commands "ListPlayers;ListSpawnedVehicles;CheckServerTime;SpawnItem Weapon_M82A1 1 Location <steam64>"
 ```
 
